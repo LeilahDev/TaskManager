@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
  const {taskArray,setTaskArray} = useContext (MyContext);
  const [inputValue, setInputValue] = useState ("");
  const [searchResults , setSearchResults] = useState (null);
+ const [currentPage, setCurrentPage] = useState(0);
+
 
  function handleCompleted (taskId) {
     //USE MAP HERE COZ WE NEED TO SOMEHOW MODIFY THE ARRAY 
@@ -46,28 +48,60 @@ import { Link } from "react-router-dom";
  return (
 
         <>
+      <div className="task-list-container">
+        
+              <div className="search-section">
+                <input type="text" placeholder="Search by title" onChange={handleChange} />
+                <button onClick={handleSearch}>🔎 Search</button>
+              </div>
 
-        <input type="text" placeholder="Search by title" onChange={handleChange}></input> 
-        <button onClick={handleSearch}>🔎 Search</button>
-     <div>
-       { tasksToShow.map ((task) => {
-           return (
-            <div key={task.id}>
-                <p>{task.title}</p>
-                <p>{task.subject}</p>
-                <p>{task.dueDate}</p>
-                <p>{task.priority}</p>
-                <p>{task.taskStatus}</p>
+              <div className="tasks-grid-wrapper">
+                {tasksToShow.length === 0 ? (
+                  <p className="no-tasks">No tasks found</p>
+                ) : (
+                  <>
 
-                <button onClick={() => handleCompleted (task.id)} disabled={task.taskStatus === 'completed'}>✅ Mark as complete</button>
-                <Link to = {`/edit/${task.id}`}><button >🖋️ Edit</button></Link>  
-                <button onClick={ () => handleDelete (task.id)}>❌ Delete task</button>
-            </div>
-           )
-       })
+                          <button 
+                            className="arrow left" 
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 0))}
+                            disabled={currentPage === 0}
+                          >
+                            ◀
+                          </button>
 
-       }
-     </ div>
+                          <div className="tasks-grid">
+                            {tasksToShow
+                              .slice(currentPage * 3, currentPage * 3 + 3)
+                              .map(task => (
+                                <div className="task-card" key={task.id}>
+                                  <h3 className={`task-title ${task.taskStatus === 'completed' ? 'completed' : ''}`}>{task.title}</h3>
+                                  <p>Subject: {task.subject}</p>
+                                  <p>Due Date: {task.dueDate}</p>
+                                  <p>Priority: {task.priority}</p>
+                                  <p>Status: {task.taskStatus}</p>
+
+                                  <div className="task-buttons">
+                                    <button onClick={() => handleCompleted(task.id)} disabled={task.taskStatus === 'completed'}>✅ Complete</button>
+                                    <Link to={`/edit/${task.id}`}><button>🖋️ Edit</button></Link>
+                                    <button onClick={() => handleDelete(task.id)}>❌ Delete</button>
+                                  </div>
+                                </div>
+                              ))
+                            }
+                          </div>
+
+                          <button 
+                            className="arrow right" 
+                            onClick={() => setCurrentPage(prev => prev + 1)}
+                            disabled={(currentPage + 1) * 3 >= tasksToShow.length}
+                          >
+                            ▶
+                          </button>
+                  </>
+                )}
+              </div>
+      </div>
+
         </>
 
  )

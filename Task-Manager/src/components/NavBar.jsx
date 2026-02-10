@@ -1,9 +1,10 @@
 import {Link} from 'react-router-dom'
+import logo from '../assets/logo.png'
 
 function NavBar () {
    return (
-        <div>
-             <p>Logo</p>
+        <div className='navBar'>
+             <img src={logo} alt="logo" className='logo'/>
              <ul>
 
                 <Link to = '/'><li>Home</li></Link>  
@@ -12,6 +13,8 @@ function NavBar () {
                  <Link to = '/taskList'><li>TaskList</li></Link> 
                  
              </ul>
+
+             <button className='navBtn'>Get Started</button>
         </div>
    )
 }

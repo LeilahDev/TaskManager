@@ -20,6 +20,7 @@ import { MyContext } from "../App.jsx";
          e.preventDefault ();
          setTaskArray ([...taskArray, {id: Date.now(), ...task}]);
 
+          alert(`${task.title} added successfully`)
          setTask (
                         {
                 title: "",
@@ -29,44 +30,47 @@ import { MyContext } from "../App.jsx";
                 taskStatus: ""
             }
          )
-       }
-
-      //  console.log(task, taskArray)
-
-       //WANTED TO USE LOCAL STORAGE TO PERSIST DATA BUT FOR NOW LET US JUST ASSUME THE 
-       // THERE IS NO REFRESHING OF THE BROWSER.
-       
+       }   
 
       return (
         <>
-          <form onSubmit={handleSubmit}>
-              <label htmlFor="taskTitle">Title</label>
-              <input type="text" id="taskTitle" required name="title" value={task.title} onChange={handleChange}></input>
 
-              <label htmlFor="subject">Subject</label>
-              <input type="text" id="subject" required  name="subject" value={task.subject} onChange={handleChange}></input>
+        <div className="add-task-container">
 
-              <label htmlFor="dueDate">Due Date</label>
-              <input type= "date" id="dueDate" required name="dueDate" value={task.dueDate} onChange={handleChange}></input>
+           <h1 className="page-title">Add a New Task</h1>
+           <p className="subtitle">Fill in the details to organize your tasks</p>
 
-              
-              <label htmlFor="priority">Priority</label>
-                <select id="priority" required name="priority" value={task.priority} onChange={handleChange}>
-                      <option value="">Select a priority</option>
-                       <option value="low">Low</option>
-                       <option value="medium">Medium</option>
-                       <option value="high">High</option>
+         <form onSubmit={handleSubmit} className="task-form">
+    
+                <label htmlFor="taskTitle">Title</label>
+                <input type="text" id="taskTitle" name="title" value={task.title} onChange={handleChange} required />
+
+                <label htmlFor="subject">Subject</label>
+                <input type="text" id="subject" name="subject" value={task.subject} onChange={handleChange} required />
+
+                <label htmlFor="dueDate">Due Date</label>
+                <input type="date" id="dueDate" name="dueDate" value={task.dueDate} onChange={handleChange} required />
+
+                <label htmlFor="priority">Priority</label>
+                <select id="priority" name="priority" value={task.priority} onChange={handleChange} required>
+                  <option value="">Select a priority</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
                 </select>
 
-              <label htmlFor="taskStatus">Status</label>
-                <select id="taskStatus" required name="taskStatus" value={task.taskStatus} onChange={handleChange}>
-                      <option value="">Select a status</option>
-                       <option value="pending">Pending</option>
-                       <option value="completed">Completed</option>
+                <label htmlFor="taskStatus">Status</label>
+                <select id="taskStatus" name="taskStatus" value={task.taskStatus} onChange={handleChange} required>
+                  <option value="">Select a status</option>
+                  <option value="pending">Pending</option>
+                  <option value="completed">Completed</option>
                 </select>
 
-              <button>Submit</button>
-          </form>
+              <button type="submit" className="submit-button">Submit</button>
+      </form>
+
+    </div>
+
         </>
       )
  }

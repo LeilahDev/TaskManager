@@ -16,34 +16,48 @@ function Dashboard () {
 
     return (
 
-       <>
+       <div className="dashboard">
 
+       <div className="welcomeMsg">
+         <h1>Hello, welcome to your dashboard 👋</h1>
+         <p>This is your personal space to manage tasks,
+             track progress, and stay organized. View your 
+             task statistics, check what’s completed, and see 
+             what needs attention 
+         </p>
+       </div>
+  
+     <div className="linkBtns">
        <Link to ='/addTask'><button>➕ Add New Task</button></Link>
        <Link to= '/taskList'> <button>🧾 View all Tasks</button></Link>
-        
-       
-          <div>
+     </div>
+
+          <div className="cardsContainer">
              <div className="card">
+                <p className="icon">🧾</p>
                 <h1>{totalTasks}</h1>
-                <p>Total Tasks</p>
+                <p className="text">Total Tasks</p>
              </div>
 
              <div className="card">
+               <p  className="icon">✅</p>
                 <h1>{completedTasks}</h1>
-                <p>Total Completed Tasks</p>
+                <p className="text">Total Completed Tasks</p>
              </div>
 
              <div className="card">
+                <p className="icon">⌛</p>
                 <h1>{pendingTasks}</h1>
-                <p>Total Pending Tasks</p>
+                <p className="text">Total Pending Tasks</p>
              </div>
 
             <div className="card">
+                <p className="icon">🗓️</p>
                 <h1>{taskDueToday}</h1>
-                <p>Total Tasks Due Today</p>
+                <p className="text">Total Tasks Due Today</p>
              </div>
         </ div>
-       </>
+       </div>
 
     )
 }
